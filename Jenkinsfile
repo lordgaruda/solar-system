@@ -76,15 +76,30 @@ pipeline {
         }
     }
 
-    post {
+        post {
         success {
-            echo "✅ Build and deploy successful: $IMAGE_NAME:$IMAGE_TAG"
+            emailext (
+                subject: "✅ SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """<p>Build succeeded!</p>
+                         <p>Job: ${env.JOB_NAME}</p>
+                         <p>Build: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>""",
+                to: "${env.RECIPIENTS}"
+            )
         }
+
         failure {
-            echo "❌ Build, test, or deploy failed. Check the logs."
+            emailext (
+                subject: "❌ FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """<p>Build failed!</p>
+                         <p>Job: ${env.JOB_NAME}</p>
+                         <p>Build: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+                         <p>Check console output for more details.</p>""",
+                to: "${env.RECIPIENTS}"
+            )
         }
+
         always {
-            sh 'docker logout || true'
+            echo "Pipeline finished."
         }
     }
 }
