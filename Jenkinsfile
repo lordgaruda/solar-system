@@ -83,7 +83,7 @@ pipeline {
                 body: """<p>Build succeeded!</p>
                          <p>Job: ${env.JOB_NAME}</p>
                          <p>Build: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>""",
-                to: "${env.RECIPIENTS}"
+                to: "${env.DEFAULT_RECIPIENTS}"
             )
         }
 
@@ -94,7 +94,7 @@ pipeline {
                          <p>Job: ${env.JOB_NAME}</p>
                          <p>Build: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
                          <p>Check console output for more details.</p>""",
-                to: "${env.RECIPIENTS}"
+                to: "${env.DEFAULT_RECIPIENTS}"
             )
         }
 
