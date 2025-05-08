@@ -1,7 +1,7 @@
 pipeline {
     options {
-    cleanWs() 
-    disableConcurrentBuilds()
+        cleanWs() 
+        disableConcurrentBuilds()
     }
 
     agent any
@@ -16,8 +16,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                sh 'if [ -d "solar-system" ]; then rm -rf solar-system; fi'
-                sh "git clone $GIT_REPO_URL"
+                git credentialsId: 'github-creds', url: "$GIT_REPO_URL", branch: 'main'
             }
         }
 
