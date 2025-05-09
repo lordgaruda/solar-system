@@ -1,9 +1,4 @@
 pipeline {
-    options {
-        cleanWs() 
-        disableConcurrentBuilds()
-    }
-
     agent any
 
     environment {
